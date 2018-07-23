@@ -9,6 +9,6 @@ public interface EdificeRepository extends JpaRepository<Edificio, String>{
 
     Edificio findByDireccion(String direccion);
 
-    Edificio findByEdificioid(String edificio);
+    Edificio findByEdificioid(int edificioid);
 
 }

@@ -25,23 +25,21 @@ public class EdificeService {
         return  "Edificio creado, la dirección es  " + newEdificio.getDireccion() + "!";
     }
 
-    public String UpdateEdifice(String edificio, String json){
+    public String UpdateEdifice(int edificio, String json){
         Edificio elEdificio = edificeRepository.findByEdificioid( edificio );
         JSONObject serverJson = new JSONObject( json );
-        String edifice = getOrNull( serverJson,"edificio" );
         String direccion = getOrNull( serverJson,"direccion" );
         int unidades_funcionales = Integer.parseInt( getOrNull( serverJson,"unidades_funcionales" ) );
         boolean sum = Boolean.parseBoolean( getOrNull( serverJson,"sum" ) );
         boolean pileta =  Boolean.parseBoolean(getOrNull( serverJson,"pileta" ));
         elEdificio.setDireccion( direccion );
-        elEdificio.setEdificio_id( edifice );
         elEdificio.setPileta( pileta );
         elEdificio.setSum( sum );
         elEdificio.setUnidades_funcionales( unidades_funcionales );
         return  "El edificio se modificó con exito! "+ elEdificio;
     }
 
-    public String DeleteEdifice(String edificio){
+    public String DeleteEdifice(int edificio){
        Edificio edifice =  edificeRepository.findByEdificioid( edificio );
        edifice.setEnabled( false );
         return "Edificio deshabilitado "+ edifice;

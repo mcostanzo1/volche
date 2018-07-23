@@ -1,28 +1,22 @@
 package com.administracion.volche.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
+
+
 
 @Entity
 public class Edificio {
 
-    private static final long serialVersionUID = 1L;
 
     @Id
-    private String edificioid;
+    private int edificioid;
     private String direccion;
     private int unidades_funcionales;
     private boolean sum;
     private boolean pileta;
     private boolean enabled;
 
-    public String getEdificio_id() {
-        return edificioid;
-    }
 
-    public void setEdificio_id(String edificio_id) {
-        this.edificioid = edificio_id;
-    }
 
     public String getDireccion() {
         return direccion;

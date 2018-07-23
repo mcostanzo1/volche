@@ -41,12 +41,12 @@ public class EdificeController {
     }
 
     @RequestMapping(value = "/edit",method = RequestMethod.POST,  consumes = MediaType.APPLICATION_JSON_VALUE)
-    public String EditEdifice(@RequestBody String edificio_id,@RequestBody String edifice) {
+    public String EditEdifice(@RequestBody int edificio_id,@RequestBody String edifice) {
         return edificeService.UpdateEdifice( edificio_id,edifice );
     }
 
     @RequestMapping(value = "/delete",method = RequestMethod.POST,  consumes = MediaType.APPLICATION_JSON_VALUE)
-    public String DeleteEdifice(@RequestBody String edificio_id) {
+    public String DeleteEdifice(@RequestBody int edificio_id) {
         return edificeService.DeleteEdifice( edificio_id );
     }
 
