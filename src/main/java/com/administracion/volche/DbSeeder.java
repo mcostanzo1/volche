@@ -39,20 +39,22 @@ public class DbSeeder implements CommandLineRunner {
 		User user = new User();
 		
 		user.setUsername("marian@marian.com");
-		user.setPassword(passwordEncoder.encode( "marian" ));
+		user.setPassword(passwordEncoder.encode( "marian" ));//user.setPassword(passwordEncoder.encode( "marian" ));
 		user.setFirstname("Marian");
 		user.setLastname("Costanzo");
-		user.setRole("ADMIN");
-		user.setEnabled( true );
+		user.setRole("hawai");
+        user.setEdificio( "administracion" );
+        user.setEnabled( true );
 
 		usersRepository.save(user);
 		
 		user = new User();
 		user.setUsername("flor@flor.com");
-		user.setPassword(passwordEncoder.encode( "flor" ));
+		user.setPassword(passwordEncoder.encode( "flor" ));//user.setPassword(passwordEncoder.encode( "flor" ));
 		user.setFirstname("flor");
 		user.setLastname("Pitrelli");
 		user.setRole("ADMIN");
+		user.setEdificio( "administracion" );
 		user.setEnabled( true );
 
 

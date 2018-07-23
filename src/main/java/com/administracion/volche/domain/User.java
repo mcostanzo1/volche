@@ -22,6 +22,8 @@ public class User implements UserDetails {
     private String firstname;
     private String lastname;
     private Boolean enabled;
+    private String edificio;
+
 
     public String getUsername() {
         return username;
@@ -37,6 +39,14 @@ public class User implements UserDetails {
 
     public String getPassword() {
         return password;
+    }
+
+    public String getEdificio() {
+        return edificio;
+    }
+
+    public void setEdificio(String edificio) {
+        this.edificio = edificio;
     }
 
     public String getRole() {

@@ -32,6 +32,29 @@ public class UserService implements UserDetailsService {
 		return  "Bienvenide " + newUser.getFirstname() + "!";
 	}
 
+	public String UpdateUser(String username, String json){
+		User elUser = userRepository.findByUsername( username );
+		JSONObject serverJson = new JSONObject( json );
+		String user = getOrNull( serverJson,"username" );
+		String password = getOrNull( serverJson,"password" );
+		String role= getOrNull( serverJson,"role" );
+		String firstname =  getOrNull( serverJson,"firstname" );
+		String lastname =  getOrNull( serverJson,"lastname" );
+		String edificio =  getOrNull( serverJson,"edificio" );
+		elUser.setFirstname( firstname );
+		elUser.setPassword( password );
+		elUser.setLastname( lastname );
+		elUser.setEdificio( edificio );
+		elUser.setUsername( user );
+		elUser.setRole( role );
+		return  "El usuario se modificó con exito! "+ elUser;
+	}
+
+	public String DeleteUser(String user){
+		User usuario = userRepository.findByUsername( user );
+		usuario.setEnabled( false );
+		return "Usuario deshabilitado: "+ usuario;
+	}
 
 	private User jsonStringToUser(String json){
 		JSONObject serverJson = new JSONObject( json );
@@ -40,12 +63,14 @@ public class UserService implements UserDetailsService {
 		String role= getOrNull( serverJson,"role" );
 		String firstname =  getOrNull( serverJson,"firstname" );
 		String lastname=  getOrNull( serverJson,"lastname" );
+		String edificio=  getOrNull( serverJson,"edificio" );
 		User newUser = new User();
 		newUser.setUsername( username );
 		newUser.setPassword(passwordEncoder.encode(password));
 		newUser.setRole( role );
 		newUser.setFirstname( firstname );
 		newUser.setLastname( lastname );
+		newUser.setEdificio( edificio );
 		return newUser;
 	}
 
