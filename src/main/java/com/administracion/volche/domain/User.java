@@ -13,7 +13,6 @@ import java.util.List;
 @Entity
 public class User implements UserDetails {
 
-    private static final long serialVersionUID = 1L;
 
     @Id
     private String username;
@@ -23,6 +22,9 @@ public class User implements UserDetails {
     private String lastname;
     private Boolean enabled;
     private String edificio;
+    private String unidad_funcional;
+    private String telefono;
+    private String celular;
 
 
     public String getUsername() {
@@ -63,7 +65,7 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        List<GrantedAuthority> auth = new ArrayList<GrantedAuthority>();
+        List<GrantedAuthority> auth = new ArrayList<>();
         auth.add(new SimpleGrantedAuthority(this.role));
         return auth;
     }

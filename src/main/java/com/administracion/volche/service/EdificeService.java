@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 
 @Service
 public class EdificeService {
@@ -24,6 +26,8 @@ public class EdificeService {
         edificeRepository.save( newEdificio );
         return  "Edificio creado, la dirección es  " + newEdificio.getDireccion() + "!";
     }
+
+
 
     public String UpdateEdifice(int edificio, String json){
         Edificio elEdificio = edificeRepository.findByEdificioid( edificio );

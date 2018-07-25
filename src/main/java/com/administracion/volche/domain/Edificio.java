@@ -1,5 +1,6 @@
 package com.administracion.volche.domain;
 
+
 import javax.persistence.*;
 
 
@@ -7,8 +8,8 @@ import javax.persistence.*;
 @Entity
 public class Edificio {
 
-
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int edificioid;
     private String direccion;
     private int unidades_funcionales;
@@ -36,6 +37,23 @@ public class Edificio {
 
     public boolean isSum() {
         return sum;
+    }
+
+    public void setEdificioid(int edificioid) {
+        this.edificioid = edificioid;
+    }
+
+    public int getEdificioid() {
+        return edificioid;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+
     }
 
     public void setSum(boolean sum) {

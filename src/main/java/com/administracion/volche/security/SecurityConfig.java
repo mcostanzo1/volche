@@ -68,6 +68,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.authorizeRequests()
 				.antMatchers("/").permitAll()
 				.antMatchers("/user/**").hasAuthority( "ADMIN" )
+                .antMatchers("/edificio/**").hasAuthority( "ADMIN" )
 		        .antMatchers("/start").permitAll()
 				.and().httpBasic().realmName(REALM)
 				.and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)

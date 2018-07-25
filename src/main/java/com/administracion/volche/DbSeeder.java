@@ -7,6 +7,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 
 
 @Component
@@ -37,15 +38,15 @@ public class DbSeeder implements CommandLineRunner {
         usersRepository.deleteAll();
         edificeRepository.deleteAll();
 
-        Edificio edificio = new Edificio();
-        edificio.setDireccion( "Av. Boyacá 473" );
-        edificio.setPileta( true );
-        edificio.setSum( true );
-        edificio.setUnidades_funcionales( 48 );
-        edificio.setEnabled( true );
-        edificeRepository.save( edificio );
+        Edificio edificio2 = new Edificio();
+		edificio2.setDireccion( "Av. Boyacá 473" );
+		edificio2.setPileta( true );
+		edificio2.setSum( true );
+		edificio2.setUnidades_funcionales( 48 );
+		edificio2.setEnabled( true );
+		edificeRepository.save( edificio2 );
 
-		Edificio edificio2 = new Edificio();
+		edificio2 = new Edificio();
 		edificio2.setDireccion( "Granaderos 683" );
 		edificio2.setPileta( true );
 		edificio2.setSum( true );
@@ -53,8 +54,17 @@ public class DbSeeder implements CommandLineRunner {
 		edificio2.setEnabled( true );
 		edificeRepository.save( edificio2 );
 
+		edificio2 = new Edificio();
+		edificio2.setDireccion( "Gascon 141" );
+		edificio2.setPileta( false );
+		edificio2.setSum( false );
+		edificio2.setUnidades_funcionales( 35 );
+		edificio2.setEnabled( true );
+		edificeRepository.save( edificio2 );
 
+		List<Edificio> edificiso = edificeRepository.findAll();
 
+		System.out.println(edificiso.get( 1 ).getDireccion());
 
 		User user = new User();
 		user.setUsername("marian@marian.com");
@@ -65,7 +75,7 @@ public class DbSeeder implements CommandLineRunner {
         user.setEdificio( "administracion" );
         user.setEnabled( true );
 		usersRepository.save(user);
-		
+
 		user = new User();
 		user.setUsername("flor@flor.com");
 		user.setPassword(passwordEncoder.encode( "flor" ));

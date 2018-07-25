@@ -27,12 +27,12 @@ public class EdificeController {
 
 
     @RequestMapping(value = "/all", method = RequestMethod.GET)
-    public ResponseEntity<List<Edificio>> listAllEdifices() {
-        List<Edificio> edificios = edificeRepository.findAll();
-        if(edificios.isEmpty()){
+    public ResponseEntity<List<Edificio>> listAllEdificess() {
+        List<Edificio> edifices = edificeRepository.findAll();
+        if(edifices.isEmpty()){
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
-        return new ResponseEntity<>(edificios, HttpStatus.OK);
+        return new ResponseEntity<>(edifices, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/create",method = RequestMethod.POST,  consumes = MediaType.APPLICATION_JSON_VALUE)
