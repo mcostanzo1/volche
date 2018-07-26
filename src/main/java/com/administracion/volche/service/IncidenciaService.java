@@ -2,11 +2,14 @@ package com.administracion.volche.service;
 
 import com.administracion.volche.dao.IncidenciaRepository;
 import com.administracion.volche.domain.Incidencia;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 
@@ -27,8 +30,8 @@ public class IncidenciaService {
         return  "Incidencia creada!";
     }
 
-    public String UpdateIncidencia(int incidenciaid, String json){
-        Incidencia laIncidencia = incidenciaRepository.findByIncidenciaid( incidenciaid );
+    public String UpdateIncidencia(String incidenciaid, String json){
+        Incidencia laIncidencia = incidenciaRepository.findByIncidenciaid( Integer.parseInt( incidenciaid ) );
         JSONObject serverJson = new JSONObject( json );
         String tipo = getOrNull( serverJson,"tipo" );
         String titulo = getOrNull( serverJson,"titulo" );
@@ -46,18 +49,27 @@ public class IncidenciaService {
         laIncidencia.setFinalizada( finalizada );
         laIncidencia.setEdificioid( edificioid );
         laIncidencia.setUsername( username );
-        return  "La Incidencia se modificó con exito! "+ laIncidencia;
+        incidenciaRepository.save( laIncidencia );
+        return  "{\"mensaje\": \"La incidencia se modificó con exito!\"}";
     }
 
     public String DeleteIncidencia(int incidenciaId){
        Incidencia incidencia =  incidenciaRepository.findByIncidenciaid( incidenciaId );
         incidencia.setFinalizada( true );
-        return "La incidencia se finalizó con éxito"+ incidencia;
+        return "{\"mensaje\": \"La incidencia finalizó con exito!\"}";
+    }
+
+    public JSONArray GetIncidenciaByEdificio(int edificioID) throws Exception {
+        List<Incidencia> listado = incidenciaRepository.findIncidenciaByEdificioid(edificioID);
+        JSONArray incidencias = new JSONArray();
+        for (int i =0; i < listado.size(); i++) {
+            incidencias.put( incidenciaToJson( listado.get( i ) ) );
+        }
+        return incidencias;
     }
 
     private Incidencia jsonStringToIncidencia(String json){
         JSONObject serverJson = new JSONObject( json );
-        int incidenciaid = Integer.parseInt(getOrNull( serverJson,"incidenciaid" ));
         String tipo = getOrNull( serverJson,"tipo" );
         String titulo = getOrNull( serverJson,"titulo" );
         String descripcion = getOrNull( serverJson,"descripcion" );
@@ -78,9 +90,31 @@ public class IncidenciaService {
         return newIncidencia;
     }
 
+    private JSONObject incidenciaToJson(Incidencia incidencia){
+        JSONObject serverJson = new JSONObject();
+        int incidenciaid = incidencia.getIncidenciaid();
+        String tipo = incidencia.getTipo();
+        String titulo = incidencia.getTitulo();
+        String descripcion = incidencia.getDescripcion();
+        String etapa = incidencia.getEtapa();
+        boolean emergencia = incidencia.isEmergencia();
+        boolean finalizada = incidencia.isFinalizada();
+        int edificioid = incidencia.getEdificioid();
+        serverJson.put( "incidenciaid", incidenciaid );
+        serverJson.put( "tipo", tipo );
+        serverJson.put( "titulo", titulo );
+        serverJson.put( "descripcion", descripcion );
+        serverJson.put( "etapa", etapa );
+        serverJson.put( "emergencia", emergencia );
+        serverJson.put( "finalizada", finalizada );
+        serverJson.put( "edificioid", edificioid );
+        return serverJson;
+    }
+
     private static String getOrNull(JSONObject serverJson, String key){
         return serverJson.optString( key,null );
     }
+
 
 
 }

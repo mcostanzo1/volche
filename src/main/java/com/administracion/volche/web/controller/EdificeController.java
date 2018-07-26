@@ -9,10 +9,7 @@ import org.springframework.http.MediaType;
 import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 @RestController
@@ -41,7 +38,7 @@ public class EdificeController {
     }
 
     @RequestMapping(value = "/edit",method = RequestMethod.POST,  consumes = MediaType.APPLICATION_JSON_VALUE)
-    public String EditEdifice(@RequestBody int edificio_id,@RequestBody String edifice) {
+    public String EditEdifice(@RequestParam("id") String edificio_id, @RequestBody String edifice) {
         return edificeService.UpdateEdifice( edificio_id,edifice );
     }
 

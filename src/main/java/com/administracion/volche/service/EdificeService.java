@@ -29,8 +29,8 @@ public class EdificeService {
 
 
 
-    public String UpdateEdifice(int edificio, String json){
-        Edificio elEdificio = edificeRepository.findByEdificioid( edificio );
+    public String UpdateEdifice(String edificio, String json){
+        Edificio elEdificio = edificeRepository.findByEdificioid( Integer.parseInt( edificio ) );
         JSONObject serverJson = new JSONObject( json );
         String direccion = getOrNull( serverJson,"direccion" );
         int unidades_funcionales = Integer.parseInt( getOrNull( serverJson,"unidades_funcionales" ) );
@@ -40,6 +40,7 @@ public class EdificeService {
         elEdificio.setPileta( pileta );
         elEdificio.setSum( sum );
         elEdificio.setUnidades_funcionales( unidades_funcionales );
+        edificeRepository.save( elEdificio );
         return  "El edificio se modificó con exito! "+ elEdificio;
     }
 

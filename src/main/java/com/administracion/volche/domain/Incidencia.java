@@ -86,5 +86,13 @@ public class Incidencia {
     public void setUsername(String username) {
         this.username = username;
     }
+
+    public int getIncidenciaid() {
+        return incidenciaid;
+    }
+
+    public void setIncidenciaid(int incidenciaid) {
+        this.incidenciaid = incidenciaid;
+    }
 }
 

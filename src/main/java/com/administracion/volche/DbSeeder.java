@@ -22,12 +22,15 @@ public class DbSeeder implements CommandLineRunner {
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 
+
 	private EdificeRepository edificeRepository;
+	private IncidenciaRepository incidenciaRepository;
 
 
-	public DbSeeder(UserRepository usersRepository, EdificeRepository edificeRepository) {
+	public DbSeeder(UserRepository usersRepository, EdificeRepository edificeRepository, IncidenciaRepository incidenciaRepository) {
 		this.usersRepository = usersRepository;
 		this.edificeRepository = edificeRepository;
+		this.incidenciaRepository = incidenciaRepository;
 
 
     }
@@ -62,9 +65,6 @@ public class DbSeeder implements CommandLineRunner {
 		edificio2.setEnabled( true );
 		edificeRepository.save( edificio2 );
 
-		List<Edificio> edificiso = edificeRepository.findAll();
-
-		System.out.println(edificiso.get( 1 ).getDireccion());
 
 		User user = new User();
 		user.setUsername("marian@marian.com");
@@ -85,6 +85,39 @@ public class DbSeeder implements CommandLineRunner {
 		user.setEdificio( "administracion" );
 		user.setEnabled( true );
 		usersRepository.save(user);
+
+		Incidencia incidencia = new Incidencia();
+		incidencia.setTipo( "gas" );
+		incidencia.setTitulo( "escape de gas" );
+		incidencia.setDescripcion( "posible escape de gas" );
+		incidencia.setEtapa( "A" );
+		incidencia.setEmergencia( true);
+		incidencia.setFinalizada( false );
+		incidencia.setEdificioid( 3 );
+		incidencia.setUsername( "flor" );
+		incidenciaRepository.save( incidencia );
+
+		incidencia = new Incidencia();
+		incidencia.setTipo( "plaga" );
+		incidencia.setTitulo( "cucarachas" );
+		incidencia.setDescripcion( "hay una invasion de cucarachas " );
+		incidencia.setEtapa( "A" );
+		incidencia.setEmergencia( true);
+		incidencia.setFinalizada( false );
+		incidencia.setEdificioid( 3 );
+		incidencia.setUsername( "flor" );
+		incidenciaRepository.save( incidencia );
+
+		incidencia = new Incidencia();
+		incidencia.setTipo( "edilicio" );
+		incidencia.setTitulo( "Se termino de romper la parrilla" );
+		incidencia.setDescripcion( "La parrilla estaba media rota y ahora se termino de romper" );
+		incidencia.setEtapa( "A" );
+		incidencia.setEmergencia( true);
+		incidencia.setFinalizada( false );
+		incidencia.setEdificioid( 1 );
+		incidencia.setUsername( "Fede" );
+		incidenciaRepository.save( incidencia );
 
 	}
 }

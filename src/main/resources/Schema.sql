@@ -20,8 +20,8 @@ CREATE TABLE USER (
   lastname VARCHAR(255) NOT NULL,
   edificio VARCHAR(255) NOT NULL,
   unidad_funcional VARCHAR(255) NOT NULL,
-  telefono VARCHAR(255) NOT NULL,
-  celular VARCHAR(255) NOT NULL,
+  telefono VARCHAR(255) ,
+  celular VARCHAR(255) ,
   enabled BOOLEAN not null);
 
 CREATE TABLE INCIDENCIA (

@@ -47,6 +47,7 @@ public class UserService implements UserDetailsService {
 		elUser.setEdificio( edificio );
 		elUser.setUsername( user );
 		elUser.setRole( role );
+		userRepository.save( elUser );
 		return  "El usuario se modificó con exito! "+ elUser;
 	}
 
