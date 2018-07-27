@@ -1,7 +1,7 @@
-DROP  TABLE  USER;
-DROP  TABLE  EDIFICIO;
-DROP  TABLE  INCIDENCIA;
-
+DROP TABLE EDIFICIO;
+DROP TABLE USER;
+DROP TABLE INCIDENCIA;
+DROP TABLE PRESUPUESTO;
 
 
 CREATE TABLE EDIFICIO (
@@ -32,7 +32,27 @@ CREATE TABLE INCIDENCIA (
   etapa VARCHAR(255) NOT NULL,
   emergencia BOOLEAN not null,
   finalizada BOOLEAN not null,
+  aprovada BOOLEAN not null,
   edificioid int NOT NULL,
-  username  VARCHAR(255) NOT NULL);
+  username  VARCHAR(255) NOT NULL,
+  aprobada BOOLEAN NOT NULL,
+  presupuestoid INT
+);
+
+CREATE TABLE PRESUPUESTO (
+  presupuestoid int AUTO_INCREMENT PRIMARY KEY NOT NULL,
+  consorcistaid VARCHAR(255) NOT NULL,
+  edificioid int NOT NULL,
+  proveedorid VARCHAR(255),
+  precio int NOT NULL,
+  fecha_desde VARCHAR(255) NOT NULL,
+  fecha_hasta VARCHAR(255) not null,
+  metodo_pago VARCHAR(255) not null,
+  cuotas_sin_interes BOOLEAN not null,
+  cant_cuotas int ,
+  interes int,
+  comentarios  VARCHAR(255) NOT NULL,
+  link VARCHAR(500),
+  estado VARCHAR(255) NOT NULL);
 
 

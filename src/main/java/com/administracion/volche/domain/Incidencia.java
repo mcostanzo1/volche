@@ -21,10 +21,28 @@ public class Incidencia {
     private boolean finalizada;
     private int edificioid;
     private String username;
+    private boolean aprobada;
+    private int presupuestoid;
 
 
     public String getTipo() {
         return tipo;
+    }
+
+    public int getPresupuestoid() {
+        return presupuestoid;
+    }
+
+    public void setPresupuestoid(int presupuestoid) {
+        this.presupuestoid = presupuestoid;
+    }
+
+    public boolean isAprobada() {
+        return aprobada;
+    }
+
+    public void setAprobada(boolean aprobada) {
+        this.aprobada = aprobada;
     }
 
     public void setTipo(String tipo) {

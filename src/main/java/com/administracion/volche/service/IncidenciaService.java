@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.security.Principal;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,11 +20,6 @@ public class IncidenciaService {
 
     @Autowired
     private IncidenciaRepository incidenciaRepository;
-
-    @Transactional(readOnly=true)
-    public Optional<Incidencia> loadIncidenciaById(final String incidenciaId)  {
-        return incidenciaRepository.findById(incidenciaId);
-    }
 
     public String CreateIncidencia(String incidencia){
         Incidencia newIncidencia = jsonStringToIncidencia(incidencia);
@@ -68,6 +65,42 @@ public class IncidenciaService {
         return incidencias;
     }
 
+    public JSONArray GetIncidenciasByUser(Principal principal){
+      List<Incidencia> listado = incidenciaRepository.findIncidenciaByUsername( principal.getName() );
+        JSONArray jsonArray = new JSONArray();
+        JSONObject incidencia;
+        for(int i = 0; i<listado.size();i++){
+            incidencia = incidenciaToJson( listado.get( i ) );
+            jsonArray.put( incidencia );
+        }
+        return jsonArray;
+    }
+
+    public String GetIncidenciasByUserString ( String username){
+        List<Incidencia> listado = incidenciaRepository.findIncidenciaByUsername( username );
+        return ListadoFinder( listado );
+    }
+
+    public String GetIncidenciaByTipo(String stringJsonObject){
+        JSONObject jsonObject = new JSONObject( stringJsonObject );
+        Object tipos = jsonObject.opt( "tipos" );
+        String in = tipos.toString().replace( "[","" ).replace( "]","" ).replace( "\"","" );
+        List<String> listado = Arrays.asList( in.split( "," ) );
+        List<Incidencia> lista = incidenciaRepository.findIncidenciaByTipoIn( listado );
+        return ListadoFinder( lista );
+    }
+
+    public String GetEmergencias() {
+        List<Incidencia> listado =incidenciaRepository.findIncidenciaByEmergencia( true );
+        return ListadoFinder( listado );
+    }
+
+
+    @Transactional(readOnly=true)
+    public Optional<Incidencia> loadIncidenciaById(final String incidenciaId)  {
+        return incidenciaRepository.findById(incidenciaId);
+    }
+
     private Incidencia jsonStringToIncidencia(String json){
         JSONObject serverJson = new JSONObject( json );
         String tipo = getOrNull( serverJson,"tipo" );
@@ -109,6 +142,19 @@ public class IncidenciaService {
         serverJson.put( "finalizada", finalizada );
         serverJson.put( "edificioid", edificioid );
         return serverJson;
+    }
+
+    private String ListadoFinder( List<Incidencia> listado){
+        if(listado.size()>0){
+            JSONArray jsonArray = new JSONArray();
+            JSONObject incidencia;
+            for(int i = 0; i<listado.size();i++){
+                incidencia = incidenciaToJson( listado.get( i ) );
+                jsonArray.put( incidencia );
+            }
+            return jsonArray.toString();}
+        else
+            return "{\"mensaje\": \"no se encontraron problemas\"}";
     }
 
     private static String getOrNull(JSONObject serverJson, String key){
