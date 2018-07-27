@@ -41,11 +41,17 @@ public class UserService implements UserDetailsService {
 		String firstname =  getOrNull( serverJson,"firstname" );
 		String lastname =  getOrNull( serverJson,"lastname" );
 		String edificio =  getOrNull( serverJson,"edificio" );
+		String unidad_funcional =  getOrNull( serverJson,"unidad_funcional" );
+		String telefono =  getOrNull( serverJson,"telefono" );
+		String celular =  getOrNull( serverJson,"celular" );
 		elUser.setFirstname( firstname );
 		elUser.setPassword( password );
 		elUser.setLastname( lastname );
 		elUser.setEdificio( edificio );
 		elUser.setUsername( user );
+		elUser.setUnidad_funcional( unidad_funcional );
+		elUser.setTelefono( telefono );
+		elUser.setCelular( celular );
 		elUser.setRole( role );
 		userRepository.save( elUser );
 		return  "El usuario se modificó con exito! "+ elUser;
@@ -65,6 +71,11 @@ public class UserService implements UserDetailsService {
 		String firstname =  getOrNull( serverJson,"firstname" );
 		String lastname=  getOrNull( serverJson,"lastname" );
 		String edificio=  getOrNull( serverJson,"edificio" );
+		String unidad_funcional=  getOrNull( serverJson,"unidad_funcional" );
+		String telefono=  getOrNull( serverJson,"telefono" );
+		String celular=  getOrNull( serverJson,"celular" );
+
+
 		User newUser = new User();
 		newUser.setUsername( username );
 		newUser.setPassword(passwordEncoder.encode(password));
@@ -72,6 +83,9 @@ public class UserService implements UserDetailsService {
 		newUser.setFirstname( firstname );
 		newUser.setLastname( lastname );
 		newUser.setEdificio( edificio );
+		newUser.setUnidad_funcional( unidad_funcional );
+		newUser.setTelefono( telefono );
+		newUser.setCelular( celular );
 		return newUser;
 	}
 

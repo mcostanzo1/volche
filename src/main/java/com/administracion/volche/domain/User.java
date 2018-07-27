@@ -26,6 +26,29 @@ public class User implements UserDetails {
     private String telefono;
     private String celular;
 
+    public String getUnidad_funcional() {
+        return unidad_funcional;
+    }
+
+    public void setUnidad_funcional(String unidad_funcional) {
+        this.unidad_funcional = unidad_funcional;
+    }
+
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
+    }
+
+    public String getCelular() {
+        return celular;
+    }
+
+    public void setCelular(String celular) {
+        this.celular = celular;
+    }
 
     public String getUsername() {
         return username;
