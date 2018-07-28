@@ -13,7 +13,6 @@ import java.util.List;
 @Entity
 public class User implements UserDetails {
 
-
     @Id
     private String username;
     private String password;

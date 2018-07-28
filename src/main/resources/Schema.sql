@@ -1,7 +1,8 @@
-DROP TABLE EDIFICIO;
-DROP TABLE USER;
-DROP TABLE INCIDENCIA;
-DROP TABLE PRESUPUESTO;
+ DROP TABLE EDIFICIO;
+ DROP TABLE USER;
+ DROP TABLE INCIDENCIA;
+ DROP TABLE PRESUPUESTO;
+-- DROP TABLE CAJA;
 
 
 CREATE TABLE EDIFICIO (
@@ -10,7 +11,8 @@ CREATE TABLE EDIFICIO (
   unidades_funcionales INT NOT NULL,
   sum BOOLEAN NOT NULL,
   pileta BOOLEAN NOT NULL,
-  enabled BOOLEAN not null);
+  enabled BOOLEAN not null
+  );
 
 CREATE TABLE USER (
   username  VARCHAR(255) NOT NULL,
@@ -36,7 +38,8 @@ CREATE TABLE INCIDENCIA (
   edificioid int NOT NULL,
   username  VARCHAR(255) NOT NULL,
   aprobada BOOLEAN NOT NULL,
-  presupuestoid INT
+  presupuestoid INT,
+  fecha DATE
 );
 
 CREATE TABLE PRESUPUESTO (
@@ -54,5 +57,29 @@ CREATE TABLE PRESUPUESTO (
   comentarios  VARCHAR(255) NOT NULL,
   link VARCHAR(500),
   estado VARCHAR(255) NOT NULL);
+
+  CREATE TABLE CAJA (
+  cajaid int AUTO_INCREMENT PRIMARY KEY NOT NULL,
+  edificioid int NOT  NULL ,
+  total int not null,
+  cbu VARCHAR (255),
+  nro_cuenta VARCHAR  (255),
+  banco varchar (255),
+  sucursal VARCHAR (255),
+  estado VARCHAR (255),
+  fondo_reserva int not null
+  );
+
+  CREATE TABLE MOVIMIENTO (
+  movimientoid int AUTO_INCREMENT PRIMARY KEY NOT NULL,
+  cajaid int not null,
+  usuarioid VARCHAR (255),
+  tipo VARCHAR (255) not NULL ,
+  estado VARCHAR (255) not NULL ,
+  concepto VARCHAR (255),
+  monto int,
+  presupuestoid int,
+  edificioid int);
+
 
 

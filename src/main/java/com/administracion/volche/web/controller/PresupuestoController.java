@@ -72,12 +72,10 @@ public class PresupuestoController {
             return presupuestos.toString();
     }
 
-
     @RequestMapping(value = "/estado",method = RequestMethod.POST,  consumes = MediaType.APPLICATION_JSON_VALUE, produces  = MediaType.APPLICATION_JSON_VALUE)
     public String FindByState(@RequestBody String jsonObject){
         return presupuestoService.GetPresupuestoByTipo( jsonObject );
     }
-
 
     @RequestMapping(value = "/finalizar",method = RequestMethod.PUT,  consumes = MediaType.APPLICATION_JSON_VALUE)
     public String FinalizarPresupuesto(@RequestParam("id") int presupuestoid) {

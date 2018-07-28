@@ -95,7 +95,7 @@ public class DbSeeder implements CommandLineRunner {
 		incidencia.setFinalizada( false );
 		incidencia.setAprobada( false );
 		incidencia.setEdificioid( 3 );
-		incidencia.setUsername( "flor" );
+		incidencia.setUsername( "flor@flor.com" );
 		incidenciaRepository.save( incidencia );
 
 		incidencia = new Incidencia();
@@ -119,7 +119,7 @@ public class DbSeeder implements CommandLineRunner {
 		incidencia.setFinalizada( false );
 		incidencia.setEdificioid( 1 );
 		incidencia.setAprobada( false );
-		incidencia.setUsername( "Fede" );
+		incidencia.setUsername( "marian@marian.com" );
 		incidenciaRepository.save( incidencia );
 
 	}

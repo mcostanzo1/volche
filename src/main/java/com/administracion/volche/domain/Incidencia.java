@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.util.Date;
 
 
 @Entity
@@ -23,7 +24,15 @@ public class Incidencia {
     private String username;
     private boolean aprobada;
     private int presupuestoid;
+    private Date fecha;
 
+    public Date getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
+    }
 
     public String getTipo() {
         return tipo;

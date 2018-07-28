@@ -2,7 +2,6 @@ package com.administracion.volche.service;
 
 import com.administracion.volche.dao.IncidenciaRepository;
 import com.administracion.volche.domain.Incidencia;
-import com.fasterxml.jackson.databind.SerializationFeature;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +9,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.security.Principal;
+import java.text.DateFormat;
+import java.util.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -21,7 +24,7 @@ public class IncidenciaService {
     @Autowired
     private IncidenciaRepository incidenciaRepository;
 
-    public String CreateIncidencia(String incidencia){
+    public String CreateIncidencia(String incidencia) throws ParseException {
         Incidencia newIncidencia = jsonStringToIncidencia(incidencia);
         incidenciaRepository.save( newIncidencia );
         return  "Incidencia creada!";
@@ -101,7 +104,7 @@ public class IncidenciaService {
         return incidenciaRepository.findById(incidenciaId);
     }
 
-    private Incidencia jsonStringToIncidencia(String json){
+    private Incidencia jsonStringToIncidencia(String json) throws ParseException {
         JSONObject serverJson = new JSONObject( json );
         String tipo = getOrNull( serverJson,"tipo" );
         String titulo = getOrNull( serverJson,"titulo" );
@@ -111,6 +114,7 @@ public class IncidenciaService {
         boolean finalizada =  Boolean.parseBoolean(getOrNull( serverJson,"finalizada" ));
         int edificioid =  Integer.parseInt(getOrNull( serverJson,"edificioid" ));
         String username = getOrNull( serverJson,"username" );
+        String fecha = getOrNull(serverJson,"fecha");
         Incidencia newIncidencia = new Incidencia();
         newIncidencia.setTipo( tipo );
         newIncidencia.setTitulo( titulo );
@@ -120,6 +124,7 @@ public class IncidenciaService {
         newIncidencia.setFinalizada( finalizada );
         newIncidencia.setEdificioid( edificioid );
         newIncidencia.setUsername( username );
+        newIncidencia.setFecha(StringToDateConverter(fecha));
         return newIncidencia;
     }
 
@@ -133,6 +138,7 @@ public class IncidenciaService {
         boolean emergencia = incidencia.isEmergencia();
         boolean finalizada = incidencia.isFinalizada();
         int edificioid = incidencia.getEdificioid();
+        Date fecha = incidencia.getFecha();
         serverJson.put( "incidenciaid", incidenciaid );
         serverJson.put( "tipo", tipo );
         serverJson.put( "titulo", titulo );
@@ -141,6 +147,7 @@ public class IncidenciaService {
         serverJson.put( "emergencia", emergencia );
         serverJson.put( "finalizada", finalizada );
         serverJson.put( "edificioid", edificioid );
+        serverJson.put("fecha", DateToStringConverter(fecha));
         return serverJson;
     }
 
@@ -155,6 +162,16 @@ public class IncidenciaService {
             return jsonArray.toString();}
         else
             return "{\"mensaje\": \"no se encontraron problemas\"}";
+    }
+
+    private Date StringToDateConverter (String date) throws ParseException {
+        DateFormat formatterr = new SimpleDateFormat("yyyy-MM-dd");
+        return formatterr.parse(date);
+    }
+
+    private String DateToStringConverter(Date date){
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        return df.format(date);
     }
 
     private static String getOrNull(JSONObject serverJson, String key){

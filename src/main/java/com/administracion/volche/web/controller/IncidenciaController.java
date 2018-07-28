@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.text.ParseException;
 import java.util.List;
 
 
@@ -36,7 +37,7 @@ public class IncidenciaController {
     }
 
     @RequestMapping(value = "/create",method = RequestMethod.POST,  consumes = MediaType.APPLICATION_JSON_VALUE)
-    public String CreateIncidencia(@RequestBody String incidencia) {
+    public String CreateIncidencia(@RequestBody String incidencia) throws ParseException {
         return incidenciaService.CreateIncidencia( incidencia );
     }
 
