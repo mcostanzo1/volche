@@ -25,7 +25,6 @@ public class UserService implements UserDetailsService {
 		return userRepository.findByUsername(username);
 	}
 
-
 	public String CreateUser(String user){
 		User newUser = jsonStringToUser(user);
 		userRepository.save(newUser);

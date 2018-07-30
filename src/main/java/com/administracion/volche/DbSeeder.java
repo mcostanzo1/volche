@@ -25,12 +25,16 @@ public class DbSeeder implements CommandLineRunner {
 
 	private EdificeRepository edificeRepository;
 	private IncidenciaRepository incidenciaRepository;
+	private CajaRepository cajaRepository;
 
 
-	public DbSeeder(UserRepository usersRepository, EdificeRepository edificeRepository, IncidenciaRepository incidenciaRepository) {
+
+	public DbSeeder(UserRepository usersRepository, EdificeRepository edificeRepository, IncidenciaRepository incidenciaRepository,
+					CajaRepository cajaRepository) {
 		this.usersRepository = usersRepository;
 		this.edificeRepository = edificeRepository;
 		this.incidenciaRepository = incidenciaRepository;
+		this.cajaRepository = cajaRepository;
 
 
     }
@@ -40,6 +44,8 @@ public class DbSeeder implements CommandLineRunner {
 
         usersRepository.deleteAll();
         edificeRepository.deleteAll();
+        incidenciaRepository.deleteAll(  );
+        cajaRepository.deleteAll(  );
 
         Edificio edificio2 = new Edificio();
 		edificio2.setDireccion( "Av. Boyacá 473" );
@@ -121,6 +127,17 @@ public class DbSeeder implements CommandLineRunner {
 		incidencia.setAprobada( false );
 		incidencia.setUsername( "marian@marian.com" );
 		incidenciaRepository.save( incidencia );
+
+		Caja caja = new Caja();
+		caja.setEdificioid( 1 );
+		caja.setBanco( "Santander Rio" );
+		caja.setNro_cuenta( "5689587/125" );
+		caja.setCbu( "1235845896587452" );
+		caja.setSucursal( "Av. Rivadavia 8767" );
+		caja.setTotal( 15000 );
+		caja.setFondo_reserva( 5000 );
+		caja.setEstado( "OK" );
+		cajaRepository.save( caja );
 
 	}
 }

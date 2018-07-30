@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 
@@ -30,7 +31,9 @@ public class MovimientoService {
     }
 
     public String CreateMovimiento(String movimiento) throws ParseException {
+        System.out.println(movimiento);
         Movimiento newMovimiento = jsonStringToMovimiento(movimiento);
+        System.out.println(MovimientoToJson( newMovimiento ));
         movimientoRepository.save( newMovimiento );
         return  "Movimiento creado!";
     }
@@ -46,16 +49,15 @@ public class MovimientoService {
         String tipo = getOrNull(serverJson,"tipo");
         String estado = getOrNull(serverJson,"estado");
         String concepto = getOrNull(serverJson,"concepto");
-        Movimiento newMovimiento = new Movimiento();
-        newMovimiento.setCajaid(cajaid);
-        newMovimiento.setMonto(monto);
-        newMovimiento.setPresupuestoid(presupuestoid);
-        newMovimiento.setEdificioid(edificioid);
-        newMovimiento.setUsuarioid(usuarioid);
-        newMovimiento.setTipo(tipo);
-        newMovimiento.setEstado(estado);
-        newMovimiento.setConcepto(concepto);
-        movimientoRepository.save(newMovimiento);
+        elMovimiento.setCajaid(cajaid);
+        elMovimiento.setMonto(monto);
+        elMovimiento.setPresupuestoid(presupuestoid);
+        elMovimiento.setEdificioid(edificioid);
+        elMovimiento.setUsuarioid(usuarioid);
+        elMovimiento.setTipo(tipo);
+        elMovimiento.setEstado(estado);
+        elMovimiento.setConcepto(concepto);
+        movimientoRepository.save(elMovimiento);
         return  "El movimiento se modificó con exito!";
     }
 
@@ -65,7 +67,28 @@ public class MovimientoService {
         return "El movimiento se finalizó correctamente!";
     }
 
+    public String AprobarTrabajo(int movimientoid) throws ParseException {
+        Movimiento elMovimiento = movimientoRepository.findByMovimientoid( movimientoid );
+        elMovimiento.setEstado( "PENDIENTE PAGO" );
+        String fecha_vto = DateToStringConverter(new Date( ));
+        Calendar c = Calendar.getInstance();
+        c.setTime( StringToDateConverter( fecha_vto ) );
+        c.add(Calendar.DATE,15);
+        elMovimiento.setFecha_vto( c.getTime() );
+        movimientoRepository.save( elMovimiento );
+        return MovimientoToJson( elMovimiento ).toString();
+    }
 
+    public void AprobarPago(int movimientoid){
+        Movimiento movimiento = movimientoRepository.findByMovimientoid( movimientoid );
+        int cajaid = movimiento.getCajaid();
+        int monto = movimiento.getMonto();
+        movimiento.setEstado( "PAGADO" );
+        Caja caja = cajaRepository.findByCajaid( cajaid );
+        caja.setTotal( caja.getTotal()- monto );
+        cajaRepository.save( caja );
+        movimientoRepository.save( movimiento );
+    }
 
     private Movimiento jsonStringToMovimiento(String json) throws ParseException {
         JSONObject serverJson = new JSONObject( json );
@@ -81,7 +104,6 @@ public class MovimientoService {
         Date fecha_vto = StringToDateConverter(getOrNull(serverJson,"fecha_vto"));
         Date fecha_carga = StringToDateConverter(getOrNull(serverJson,"fecha_carga"));
         Date fecha_mes_liquidado = StringToDateConverter(getOrNull(serverJson,"fecha_mes_liquidado"));
-
         Movimiento newMovimiento = new Movimiento();
         newMovimiento.setCajaid(cajaid);
         newMovimiento.setMonto(monto);
@@ -95,7 +117,6 @@ public class MovimientoService {
         newMovimiento.setFecha_vto(fecha_vto);
         newMovimiento.setFecha_carga(fecha_carga);
         newMovimiento.setFecha_mes_liquidado(fecha_mes_liquidado);
-
         return newMovimiento;
     }
 
@@ -129,10 +150,6 @@ public class MovimientoService {
         return serverJson;
     }
 
-    private static String getOrNull(JSONObject serverJson, String key){
-        return serverJson.optString( key,null );
-    }
-
     private Date StringToDateConverter (String date) throws ParseException {
         DateFormat formatterr = new SimpleDateFormat("yyyy-MM-dd");
         return formatterr.parse(date);
@@ -142,5 +159,11 @@ public class MovimientoService {
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         return df.format(date);
     }
+
+    private static String getOrNull(JSONObject serverJson, String key){
+        return serverJson.optString( key,null );
+    }
+
+
 
 }
