@@ -178,6 +178,4 @@ public class IncidenciaService {
         return serverJson.optString( key,null );
     }
 
-
-
 }

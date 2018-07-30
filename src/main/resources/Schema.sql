@@ -2,7 +2,8 @@
  DROP TABLE USER;
  DROP TABLE INCIDENCIA;
  DROP TABLE PRESUPUESTO;
--- DROP TABLE CAJA;
+ DROP TABLE CAJA;
+ DROP TABLE MOVIMIENTO;
 
 
 CREATE TABLE EDIFICIO (
@@ -79,7 +80,12 @@ CREATE TABLE PRESUPUESTO (
   concepto VARCHAR (255),
   monto int,
   presupuestoid int,
-  edificioid int);
+  edificioid int,
+  fecha_pago DATE,
+  fecha_vto DATE,
+  fecha_carga DATE,
+  fecha_mes_liquidado DATE
+  );
 
 
 
