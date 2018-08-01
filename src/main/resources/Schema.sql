@@ -40,7 +40,7 @@ CREATE TABLE INCIDENCIA (
   username  VARCHAR(255) NOT NULL,
   aprobada BOOLEAN NOT NULL,
   presupuestoid INT,
-  fecha DATE
+  fecha DATE NOT NULL
 );
 
 CREATE TABLE PRESUPUESTO (

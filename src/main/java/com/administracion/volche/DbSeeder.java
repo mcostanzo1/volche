@@ -7,6 +7,10 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 
@@ -40,7 +44,7 @@ public class DbSeeder implements CommandLineRunner {
     }
 
 	@Override
-	public void run(String... arg0) {
+	public void run(String... arg0) throws ParseException {
 
         usersRepository.deleteAll();
         edificeRepository.deleteAll();
@@ -113,7 +117,8 @@ public class DbSeeder implements CommandLineRunner {
 		incidencia.setFinalizada( false );
 		incidencia.setAprobada( false );
 		incidencia.setEdificioid( 3 );
-		incidencia.setUsername( "flor" );
+		incidencia.setUsername( "flor@flor.com" );
+		incidencia.setFecha( StringToDateConverter( "2018-04-05" ) );
 		incidenciaRepository.save( incidencia );
 
 		incidencia = new Incidencia();
@@ -126,6 +131,7 @@ public class DbSeeder implements CommandLineRunner {
 		incidencia.setEdificioid( 1 );
 		incidencia.setAprobada( false );
 		incidencia.setUsername( "marian@marian.com" );
+		incidencia.setFecha( StringToDateConverter( "2018-03-05" ) );
 		incidenciaRepository.save( incidencia );
 
 		Caja caja = new Caja();
@@ -139,5 +145,12 @@ public class DbSeeder implements CommandLineRunner {
 		caja.setEstado( "OK" );
 		cajaRepository.save( caja );
 
+
+
+	}
+
+	private Date StringToDateConverter (String date) throws ParseException {
+		DateFormat formatterr = new SimpleDateFormat("yyyy-MM-dd");
+		return formatterr.parse(date);
 	}
 }

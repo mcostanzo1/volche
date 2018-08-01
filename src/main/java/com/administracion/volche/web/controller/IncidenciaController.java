@@ -58,7 +58,7 @@ public class IncidenciaController {
     @RequestMapping(value = "/mis_incidencias",method = RequestMethod.GET,  consumes = MediaType.APPLICATION_JSON_VALUE, produces  = MediaType.APPLICATION_JSON_VALUE)
     public String EditIncidencia(Principal principal) {
         JSONArray incidencias = incidenciaService.GetIncidenciasByUser( principal  );
-        if(incidencias.length() == 0){
+        if(incidencias.length() <1){
             return  "{\"mensaje\": \"no se encontraron problemas\"}";
         }else
             return incidencias.toString();

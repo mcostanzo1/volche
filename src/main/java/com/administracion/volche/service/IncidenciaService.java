@@ -72,11 +72,14 @@ public class IncidenciaService {
       List<Incidencia> listado = incidenciaRepository.findIncidenciaByUsername( principal.getName() );
         JSONArray jsonArray = new JSONArray();
         JSONObject incidencia;
+        if(!listado.isEmpty()){
         for(int i = 0; i<listado.size();i++){
             incidencia = incidenciaToJson( listado.get( i ) );
             jsonArray.put( incidencia );
         }
-        return jsonArray;
+        return jsonArray;}
+        else
+            return jsonArray;
     }
 
     public String GetIncidenciasByUserString ( String username){
