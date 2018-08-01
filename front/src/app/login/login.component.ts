@@ -1,19 +1,19 @@
-﻿///<reference path="../../../node_modules/@types/selenium-webdriver/http.d.ts"/>
-import { Component } from '@angular/core';
+﻿import { Component } from '@angular/core';
 import '../../assets/login-animation.js';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {headersToString} from 'selenium-webdriver/http';
+import {Router} from "@angular/router";
+
 
 @Component({
-  selector: 'app-root',
+  selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class AppComponent {
+export class LoginComponent {
   email: string;
   password: string;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient,private router: Router) {
   }
 
   ngAfterViewInit() {
@@ -28,7 +28,9 @@ export class AppComponent {
    .append('Access-Control-Allow-Origin', '*');
     console.log(headers.getAll('Authorization'));
     this.http.get( 'http://localhost/incidencia/mis_incidencias', {headers: headers}).subscribe(data => {
-      console.log(data);
+      if(data!= null){
+          this.router.navigate(['inicio'])
+        }
     });
   }
   }
