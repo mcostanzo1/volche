@@ -6,6 +6,7 @@ import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
 import {RouterModule, Routes} from "@angular/router";
 import { InicioComponent } from './inicio/inicio.component';
+import { LoginerrorComponent } from './loginerror/loginerror.component';
 
 
 const appRoutes: Routes = [
@@ -15,12 +16,16 @@ const appRoutes: Routes = [
       {
         path: 'login',
         component: LoginComponent
-      },
+      }
       ]
   },
   {
     path: 'inicio',
     component: InicioComponent
+  },
+  {
+    path: 'login_error',
+    component: LoginerrorComponent
   }]
 ;
 
@@ -29,7 +34,8 @@ const appRoutes: Routes = [
   declarations: [
     LoginComponent,
     HomeComponent,
-    InicioComponent
+    InicioComponent,
+    LoginerrorComponent
   ],
   imports: [
     BrowserModule,
@@ -37,6 +43,7 @@ const appRoutes: Routes = [
     HttpClientModule,
     RouterModule.forRoot(appRoutes)
   ],
+  exports:[RouterModule],
   providers: [],
   bootstrap: [HomeComponent]
 })
